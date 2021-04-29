@@ -14,13 +14,20 @@
   </head>
   <body>
     <header>
-      <h1>Vue Course Goals</h1>
+      <h1>Vue Course</h1>
     </header>
     <section id="user-goal">
       <h2>My Course Goal</h2>
       <!-- Interpolation syntax -->
       <p>{{ courseGoal() }}</p>
       <p>Learn more <a :href="course.link">about Vue</a></p>
+      <h2>Events in Action</h2>
+      <button @click="increment()">Add</button>
+      <button @click="increment(2)">Add 2</button>
+      <button @click="decrement">Remove</button>
+      <p>Result: {{ counter }}</p>
+      <input type="text" @input="setName($event, 'Magno')" />
+      <p>Your name: {{ me.name }}</p>
     </section>
   </body>
 </html>
