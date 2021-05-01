@@ -25,9 +25,18 @@
       <button @click="increment()">Add</button>
       <button @click="increment(2)">Add 2</button>
       <button @click="decrement">Remove</button>
+      <p v-once>Starting counter: {{ counter }}</p>
       <p>Result: {{ counter }}</p>
-      <input type="text" @input="setName($event, 'Magno')" />
-      <p>Your name: {{ me.name }}</p>
+      <input
+        type="text"
+        @input="setName($event, 'Magno')"
+        @keyup.enter="confirmName"
+      />
+      <p>Your name: {{ confirmedName }}</p>
+      <form @submit.prevent="submitForm">
+        <input type="text" />
+        <button>Sign Up</button>
+      </form>
     </section>
   </body>
 </html>

@@ -6,8 +6,9 @@ const app = Vue.createApp({
         goalTextA: 'Finish the course and learn Vue!',
         goalTextB: 'Master Vue and build amazing apps!'
       },
-      counter: 0,
-      me: { name: '' }
+      counter: 10,
+      me: { name: '' },
+      confirmedName: ''
     }
   },
   methods: {
@@ -24,6 +25,13 @@ const app = Vue.createApp({
     },
     setName({ target }, lastName,) {
       this.me.name = `${target.value} ${lastName}`;
+    },
+    confirmName() {
+      this.confirmedName = this.me.name;
+    }
+    ,
+    submitForm() {
+      alert('Submitted!')
     }
   }
 });
