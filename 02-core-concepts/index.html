@@ -19,7 +19,7 @@
     <section id="user-goal">
       <h2>My Course Goal</h2>
       <!-- Interpolation syntax -->
-      <p>{{ courseGoal() }}</p>
+      <p>{{ courseGoal }}</p>
       <p>Learn more <a :href="course.link">about Vue</a></p>
       <h2>Events in Action</h2>
       <button @click="increment()">Add</button>
@@ -36,7 +36,7 @@
       <!-- Two-Way Binding (v-model) -->
       <!-- :value="name" @input shortcut -->
       <input type="text" v-model="me.name" />
-      <p>Your name: {{ outputFullname() }}</p>
+      <p>Your name: {{ fullname }}</p>
       <form @submit.prevent="submitForm">
         <input type="text" />
         <button>Sign Up</button>
