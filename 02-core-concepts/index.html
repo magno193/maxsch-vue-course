@@ -33,6 +33,10 @@
         @keyup.enter="confirmName"
       />
       <p>Your name: {{ confirmedName }}</p>
+      <!-- Two-Way Binding (v-model) -->
+      <!-- :value="name" @input shortcut -->
+      <input type="text" v-model="me.name" />
+      <p>Your name: {{ outputFullname() }}</p>
       <form @submit.prevent="submitForm">
         <input type="text" />
         <button>Sign Up</button>

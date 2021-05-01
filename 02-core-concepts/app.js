@@ -23,13 +23,15 @@ const app = Vue.createApp({
     decrement() {
       this.counter > 0 && this.counter--;
     },
-    setName({ target }, lastName,) {
-      this.me.name = `${target.value} ${lastName}`;
+    setName({ target }) {
+      this.me.name = target.value;
     },
     confirmName() {
       this.confirmedName = this.me.name;
-    }
-    ,
+    },
+    outputFullname() {
+      return !this.me.name ? '' : `${this.me.name} Magno`;
+    },
     submitForm() {
       alert('Submitted!')
     }
