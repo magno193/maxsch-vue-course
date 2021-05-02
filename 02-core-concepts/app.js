@@ -20,6 +20,11 @@ const app = Vue.createApp({
       return random < 0.5 ? this.course.goalTextA : this.course.goalTextB;
     },
   },
+  watch: {
+    counter(value) {
+      value > 50 && (setTimeout(() => { this.counter = 0 }, 2000));
+    }
+  },
   methods: {
     increment(num) {
       !num && (num = 1);
