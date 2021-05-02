@@ -6,6 +6,11 @@ Vue.createApp({
       boxC: false,
     };
   },
+  computed: {
+    boxBClasses() {
+      return { active: this.boxB }
+    }
+  },
   methods: {
     selectBox(box) {
       switch (box) {

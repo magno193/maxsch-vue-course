@@ -18,18 +18,20 @@
     </header>
     <section id="styling">
       <div
-        class="demo"
         @click="selectBox('A')"
+        class="demo"
+        :class="{active: boxA}"
         :style="{borderColor: boxA ? 'red' : ''}"
       ></div>
       <div
-        class="demo"
         @click="selectBox('B')"
+        class="demo"
+        :class="boxBClasses"
         :style="{borderColor: boxB ? 'green' : ''}"
       ></div>
       <div
-        class="demo"
         @click="selectBox('C')"
+        :class="['demo', { active: boxC }]"
         :style="{borderColor: boxC ? 'blue' : ''}"
       ></div>
     </section>
