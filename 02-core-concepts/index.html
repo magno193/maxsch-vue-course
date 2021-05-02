@@ -14,33 +14,24 @@
   </head>
   <body>
     <header>
-      <h1>Vue Course</h1>
+      <h1>Vue Dynamic Styling</h1>
     </header>
-    <section id="user-goal">
-      <h2>My Course Goal</h2>
-      <!-- Interpolation syntax -->
-      <p>{{ courseGoal }}</p>
-      <p>Learn more <a :href="course.link">about Vue</a></p>
-      <h2>Events in Action</h2>
-      <button @click="increment()">Add</button>
-      <button @click="increment(2)">Add 2</button>
-      <button @click="decrement">Remove</button>
-      <p v-once>Starting counter: {{ counter }}</p>
-      <p>Result: {{ counter }}</p>
-      <input
-        type="text"
-        @input="setName($event, 'Magno')"
-        @keyup.enter="confirmName"
-      />
-      <p>Your name: {{ confirmedName }}</p>
-      <!-- Two-Way Binding (v-model) -->
-      <!-- :value="name" @input shortcut -->
-      <input type="text" v-model="me.name" />
-      <p>Your name: {{ fullname }}</p>
-      <form @submit.prevent="submitForm">
-        <input type="text" />
-        <button>Sign Up</button>
-      </form>
+    <section id="styling">
+      <div
+        class="demo"
+        @click="selectBox('A')"
+        :style="{borderColor: boxA ? 'red' : ''}"
+      ></div>
+      <div
+        class="demo"
+        @click="selectBox('B')"
+        :style="{borderColor: boxB ? 'green' : ''}"
+      ></div>
+      <div
+        class="demo"
+        @click="selectBox('C')"
+        :style="{borderColor: boxC ? 'blue' : ''}"
+      ></div>
     </section>
   </body>
 </html>
