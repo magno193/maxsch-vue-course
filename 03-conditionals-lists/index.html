@@ -18,12 +18,15 @@
     </header>
     <section id="user-goals">
       <h2>My course goals</h2>
-      <input type="text" />
-      <button>Add Goal</button>
-      <p>No goals have been added yet - please start adding some!</p>
-      <ul>
+      <input type="text" v-model="goalInputValue" />
+      <button @click="addGoal">Add Goal</button>
+      <p v-if="!goals.length">
+        No goals have been added yet - please start adding some!
+      </p>
+      <ul v-else>
         <li>Goal</li>
       </ul>
+      <p v-show="goals.length">Nice! Keep adding more :)</p>
     </section>
   </body>
 </html>
