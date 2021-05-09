@@ -11,22 +11,22 @@ const app = Vue.createApp({
       this.currentUserInput = event.target.value;
     },
     setText() {
-      this.message = this.currentUserInput;
+      this.message = this.$refs.userText.value;
     },
   },
 });
 
 app.mount('#app');
-/* ----------------------------------------------------------------------------- */
-const data = { message: 'Hello', longMessage: 'Hello! World!' };
-const handler = {
-  set(target, key, value) {
-    if (key === 'message') {
-      target.longMessage = value + ' World!';
-    }
-  }
-};
-const proxy = new Proxy(data, handler);
-console.log(proxy.longMessage);
-proxy.message = 'Hello!!!';
-console.log(proxy.longMessage);
+// /* ----------------------------------------------------------------------------- */
+// const data = { message: 'Hello', longMessage: 'Hello! World!' };
+// const handler = {
+//   set(target, key, value) {
+//     if (key === 'message') {
+//       target.longMessage = value + ' World!';
+//     }
+//   }
+// };
+// const proxy = new Proxy(data, handler);
+// console.log(proxy.longMessage);
+// proxy.message = 'Hello!!!';
+// console.log(proxy.longMessage);
