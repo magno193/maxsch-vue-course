@@ -3,10 +3,8 @@
   <header>
     <h1>Friends list</h1>
   </header>
-  <ul>
-    <FriendContact />
-    <FriendContact />
-    <FriendContact />
+  <ul v-for="friend in friends" :key="friend.id">
+    <FriendContact :name="friend.name" :phone-number="friend.phone" :email-address="friend.email"/>
   </ul>
 </section>
 </template>
@@ -21,6 +19,12 @@ export default {
           name: 'Doe John',
           phone: '98 7654 3210',
           email: 'doejohn@localhost.com',
+        },
+        {        
+          id: 'john',
+          name: 'John doe',
+          phone: '01 2345 6789',
+          email: 'johndoe@localhost.com',
         },
       ]
     };
