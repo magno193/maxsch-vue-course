@@ -15,6 +15,10 @@ export default {
   /* Simple way */ 
   // props: ['name', 'phoneNumber', 'emailAddress', 'isFavorite'],
   props: {
+    id: {
+      type: String,
+      required: true,
+    },
     name: {
       type: String,
       required: true,
@@ -36,7 +40,6 @@ export default {
   data() {
     return {
       detailsAreVisible: false,
-      friendIsFavorite: this.isFavorite
     };
   },
   methods: {
@@ -44,12 +47,12 @@ export default {
       this.detailsAreVisible = !this.detailsAreVisible;
     },
     toggleFavorite() {
-      this.friendIsFavorite = !this.friendIsFavorite
+      this.$emit('toggle-favorite', this.id);
     },
   },
   computed: {
     detailsButtonText() { return this.detailsAreVisible ? 'Hide Details' : 'Show Details' },
-    favoriteText() { return this.friendIsFavorite ? '(Favorite)' : ''}
+    favoriteText() { return this.isFavorite ? '(Favorite)' : ''}
   }
 }
 </script>
