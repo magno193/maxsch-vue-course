@@ -28,12 +28,9 @@ export default {
       required: true,
     },
     isFavorite: {
-      type: String,
+      type: Boolean,
       required: false,
-      default: '0',
-      validator: function(value) {
-        return value === '1' || value === '0'
-      }
+      default: false,
     },
   },
   data() {
@@ -47,16 +44,12 @@ export default {
       this.detailsAreVisible = !this.detailsAreVisible;
     },
     toggleFavorite() {
-      if (this.friendIsFavorite === '1') {
-        this.friendIsFavorite = '0';
-        return;
-      }
-      this.friendIsFavorite = '1';
+      this.friendIsFavorite = !this.friendIsFavorite
     },
   },
   computed: {
     detailsButtonText() { return this.detailsAreVisible ? 'Hide Details' : 'Show Details' },
-    favoriteText() { return this.friendIsFavorite === '1' ? '(Favorite)' : ''}
+    favoriteText() { return this.friendIsFavorite ? '(Favorite)' : ''}
   }
 }
 </script>
