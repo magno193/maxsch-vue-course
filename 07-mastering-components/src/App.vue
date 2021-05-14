@@ -1,16 +1,19 @@
 <template>
   <div>
-    <the-header></the-header>
-    <badge-list></badge-list>
-    <user-info
+    <TheHeader />
+    <BadgeList />
+    <UserInfo
       :full-name="activeUser.name"
       :info-text="activeUser.description"
       :role="activeUser.role"
-    ></user-info>
+    ></UserInfo>
   </div>
 </template>
 
 <script>
+import TheHeader from './components/TheHeader.vue';
+import BadgeList from './components/BadgeList.vue';
+import UserInfo from './components/UserInfo.vue';
 export default {
   data() {
     return {
@@ -21,6 +24,7 @@ export default {
       },
     };
   },
+  components: { TheHeader, BadgeList, UserInfo }
 };
 </script>
 
