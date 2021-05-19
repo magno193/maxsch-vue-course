@@ -50,11 +50,11 @@ export default {
           for (const id in data) {
             results.push({ id, name: data[id].name, rating: data[id].rating });
           }
-          this.isLoading = false;
+          this.isLoading = null;
           this.results = results;
         })
         .catch((error) => {
-          this.isLoading = false;
+          this.isLoading = null;
           console.log(error);
           this.error = 'Failed to fetch data - please try again later';
         });
