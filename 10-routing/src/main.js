@@ -21,7 +21,15 @@ const router = createRouter({
         { name: 'team-members', path: ':teamId', component: TeamMembers, props: true },
       ]
     },
-    { path: '/users', components: { default: UsersList, footer: UsersFooter }, alias: '/user' },
+    {
+      path: '/users',
+      components: { default: UsersList, footer: UsersFooter },
+      alias: '/user',
+      beforeEnter(to, from, next) {
+        console.log('Users beforeEnter');
+        next();
+      }
+    },
     { path: '/:notFound(.*)', component: NotFound }
   ],
   linkActiveClass: 'router-active',
@@ -33,16 +41,22 @@ const router = createRouter({
   }
 });
 
-// Navgigation Guard
+// Navigation Guard
 router.beforeEach((to, from, next) => {
-  console.log(to, from);
   /*if (to.name === 'team-members') {
     next(); // can be next(false) or next('/route')
   } else {
     // stuck on 'team route'
     next({ name: 'team-members', params: { teamId: 't2' } });
   }*/
+  console.log('Global beforeEach');
   next();
+});
+
+router.afterEach((to, from) => {
+  // sending analytics data
+  console.log('Global afterEach');
+  console.log(to, from);
 });
 
 const app = createApp(App);
