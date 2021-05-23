@@ -16,6 +16,7 @@ const router = createRouter({
     {
       name: 'teams',
       path: '/teams',
+      meta: { needsAuth: true },
       components: { default: TeamsList, footer: TeamsFooter },
       children: [
         { name: 'team-members', path: ':teamId', component: TeamMembers, props: true },
@@ -43,13 +44,11 @@ const router = createRouter({
 
 // Navigation Guard
 router.beforeEach((to, from, next) => {
-  /*if (to.name === 'team-members') {
-    next(); // can be next(false) or next('/route')
-  } else {
-    // stuck on 'team route'
-    next({ name: 'team-members', params: { teamId: 't2' } });
-  }*/
   console.log('Global beforeEach');
+
+  if (to.meta.needsAuth) {
+    console.log('Needs auth!')
+  }
   next();
 });
 
