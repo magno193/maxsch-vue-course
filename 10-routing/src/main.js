@@ -24,7 +24,25 @@ const router = createRouter({
     { path: '/users', components: { default: UsersList, footer: UsersFooter }, alias: '/user' },
     { path: '/:notFound(.*)', component: NotFound }
   ],
-  linkActiveClass: 'router-active'
+  linkActiveClass: 'router-active',
+  scrollBehavior(_, _2, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    }
+    return { left: 0, top: 0 };
+  }
+});
+
+// Navgigation Guard
+router.beforeEach((to, from, next) => {
+  console.log(to, from);
+  /*if (to.name === 'team-members') {
+    next(); // can be next(false) or next('/route')
+  } else {
+    // stuck on 'team route'
+    next({ name: 'team-members', params: { teamId: 't2' } });
+  }*/
+  next();
 });
 
 const app = createApp(App);
