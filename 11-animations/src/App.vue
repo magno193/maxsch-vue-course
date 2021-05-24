@@ -1,5 +1,10 @@
 <template>
-  <div class="container">
+  <router-view v-slot="slotProps">
+    <transition name="route" mode="out-in">
+      <component :is="slotProps.Component"></component>
+    </transition>
+  </router-view>
+  <!-- <div class="container">
     <UsersList />
   </div>
   <div class="container">
@@ -34,13 +39,13 @@
   </base-modal>
   <div class="container">
     <button @click="showDialog">Show Dialog</button>
-  </div>
+  </div> -->
 </template>  
 
 <script>
-import UsersList from './components/UsersList';
+// import UsersList from './components/UsersList';
 export default {
-  components: { UsersList },
+  // components: { UsersList },
   data() {
     return {
       animatedBlock: false,
@@ -186,6 +191,23 @@ button:active {
   opacity: 1;
 }
 
+.route-enter-active {
+  animation: route-fade 1s ease-out;
+}
+.route-leave-active {
+  animation: route-fade 1s ease-in reverse;
+}
+
+@keyframes route-fade {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 @keyframes slide-fade {
   0% {
     transform: translateX(0) scale(1);
