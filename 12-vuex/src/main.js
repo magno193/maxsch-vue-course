@@ -27,6 +27,18 @@ const store = createStore({
       if (finalCounter > 100) return 100;
       return finalCounter;
     }
+  },
+  actions: {
+    increment(context) {
+      setTimeout(() => {
+        context.commit('increment');
+      }, 500);
+    },
+    increase(context, payload) {
+      setTimeout(() => {
+        context.commit('increase', payload);
+      }, 1000);
+    }
   }
 });
 const app = createApp(App);

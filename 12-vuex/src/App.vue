@@ -22,7 +22,8 @@ export default {
   methods: {
     addOne() {
       // this.$store.commit('increase', { value: 10 });
-      this.$store.commit({
+      // Action can use async code
+      this.$store.dispatch({
         type: 'increase',
         value: 10,
       });
