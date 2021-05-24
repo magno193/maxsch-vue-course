@@ -47,21 +47,40 @@ export default {
       console.log('After Enter');
       console.log(el);
     },
-    enter(el) {
+    enter(el, done) {
       console.log('Enter');
       console.log(el);
+      let round = 1;
+      const interval = setInterval(() => {
+        el.style.opacity = round * 0.01;
+        round++;
+        if (round > 100) {
+          clearInterval(interval);
+          done();
+        }
+      }, 20);
     },
     beforeEnter(el) {
       console.log('Before Enter');
       console.log(el);
+      el.style.opacity = 0;
     },
     afterLeave(el) {
       console.log('After Leave');
       console.log(el);
     },
-    leave(el) {
+    leave(el, done) {
       console.log('Leave');
       console.log(el);
+      let round = 0;
+      const interval = setInterval(() => {
+        el.style.opacity = 1 - round * 0.01;
+        round++;
+        if (round > 100) {
+          clearInterval(interval);
+          done();
+        }
+      }, 20);
     },
     beforeLeave(el) {
       console.log('Before Leave');
@@ -150,32 +169,6 @@ button:active {
 .fade-button-enter-to,
 .fade-button-leave-from {
   opacity: 1;
-}
-
-.para-enter-from {
-  /* opacity: 0;
-  transform: translateY(-30px); */
-}
-.para-enter-active {
-  /* transition: all 0.5s ease-out; */
-  animation: slide-fade 0.3s ease-out;
-}
-.para-enter-to {
-  /* opacity: 1;
-  transform: translateY(0); */
-}
-
-.para-leave-from {
-  /* opacity: 1;
-  transform: translateY(0); */
-}
-.para-leave-active {
-  /* transition: all 0.5s ease-in; */
-  animation: slide-fade 0.3s ease-out;
-}
-.para-leave-to {
-  /* opacity: 0;
-  transform: translateY(-30px); */
 }
 
 @keyframes slide-fade {
