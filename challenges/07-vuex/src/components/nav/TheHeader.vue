@@ -25,13 +25,17 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 export default {
   computed: {
     // quantity() {
     //   return this.$store.getters['cart/quantity'];
     // },
     ...mapGetters('cart', ['quantity']),
+    ...mapGetters(['isLoggedIn']),
+  },
+  methods: {
+    ...mapActions(['login', 'logout']),
   },
 };
 </script>
