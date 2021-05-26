@@ -54,7 +54,7 @@ export default {
       return state.items;
     },
     totalSum(state) {
-      return state.total;
+      return state.total.toFixed(2);
     },
     quantity(state) {
       return state.qty;

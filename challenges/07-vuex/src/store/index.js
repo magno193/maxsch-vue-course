@@ -13,6 +13,9 @@ export default createStore({
     };
   },
   getters: {
+    isLoggedIn(state) {
+      return state.isLoggedIn;
+    }
   },
   mutations: {
     login(state) {
