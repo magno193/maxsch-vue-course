@@ -15,8 +15,10 @@ export default {
       body: JSON.stringify(coachData)
     });
 
-    if (response.ok) {
-      console.table(coachData)
+    if (!response.ok) {
+      const responseData = await response.json();
+      const error = new Error(responseData.message || 'Failed to update');
+      throw error;
     }
 
     context.commit('registerCoach', { ...coachData, id: userId });
@@ -25,8 +27,10 @@ export default {
     const response = await fetch('https://coach-app-2f095-default-rtdb.firebaseio.com/coaches.json');
     const responseData = await response.json();
 
-    if (response.ok) {
-      // ... 
+    if (!response.ok) {
+      const responseData = await response.json();
+      const error = new Error(responseData.message || 'Failed to fetch');
+      throw error;
     }
 
     const coaches = [];
