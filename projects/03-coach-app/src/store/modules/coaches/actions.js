@@ -23,7 +23,9 @@ export default {
 
     commit('registerCoach', { ...coachData, id: userId });
   },
-  async loadCoaches({ commit }) {
+  async loadCoaches({ commit, getters }, payload) {
+    if (!payload.forceRefresh && !getters.shouldUpdate) return;
+
     const response = await fetch('https://coach-app-2f095-default-rtdb.firebaseio.com/coaches.json');
     const responseData = await response.json();
 
@@ -48,5 +50,6 @@ export default {
     }
 
     commit('setCoaches', coaches);
+    commit('setFetchTimestamp');
   }
 };
