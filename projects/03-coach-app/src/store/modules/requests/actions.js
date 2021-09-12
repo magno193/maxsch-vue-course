@@ -10,7 +10,7 @@ export default {
       method: 'POST',
       body: JSON.stringify(newRequest)
     })
-    const responseData = response.json();
+    const responseData = await response.json();
 
     if (!response.ok) {
       const error = new Error(responseData.message || 'Failed to send request.');
