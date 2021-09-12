@@ -1,5 +1,5 @@
 export default {
-  contactCoach(context, payload) {
+  contactCoach({ commit }, payload) {
     const { coachId, email, message } = payload;
     const newRequest = {
       id: new Date().toISOString(),
@@ -7,6 +7,6 @@ export default {
       userEmail: email,
       userMessage: message,
     };
-    context.commit('addRequest', newRequest);
+    commit('addRequest', newRequest);
   },
 };

@@ -6,7 +6,13 @@
 
 <script>
 export default {
-  props: ['type', 'title'],
+  props: {
+    type: {
+      type: String,
+      validator: (t) => ['frontend', 'backend', 'career'].includes(t),
+    },
+    title: String,
+  },
   computed: {
     text() {
       return this.title.toUpperCase();

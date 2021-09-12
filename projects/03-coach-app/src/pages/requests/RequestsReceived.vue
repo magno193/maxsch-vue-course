@@ -25,9 +25,6 @@ export default {
   components: { RequestItem },
   computed: {
     ...mapGetters('requests', ['requests', 'hasRequests']),
-    // requests() {
-    //   return this.$store.getters['requests/requests'];
-    // },
   },
 };
 </script>
