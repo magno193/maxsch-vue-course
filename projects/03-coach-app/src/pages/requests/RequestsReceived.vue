@@ -1,30 +1,32 @@
 <template>
-  <base-dialog
-    :show="!!errorMessage"
-    title="An error has occurred"
-    @close="handleError"
-  >
-    {{ errorMessage }}
-  </base-dialog>
-  <section>
-    <base-card>
-      <header>
-        <h2>Requests received</h2>
-      </header>
-      <div v-if="isLoading">
-        <base-spinner />
-      </div>
-      <ul v-else-if="hasRequests && !isLoading">
-        <request-item
-          v-for="request in requests"
-          :key="request.id"
-          :email="request.userEmail"
-          :message="request.userMessage"
-        />
-      </ul>
-      <h3 v-else>You haven't received any requests yet!</h3>
-    </base-card>
-  </section>
+  <div>
+    <base-dialog
+      :show="!!errorMessage"
+      title="An error has occurred"
+      @close="handleError"
+    >
+      {{ errorMessage }}
+    </base-dialog>
+    <section>
+      <base-card>
+        <header>
+          <h2>Requests received</h2>
+        </header>
+        <div v-if="isLoading">
+          <base-spinner />
+        </div>
+        <ul v-else-if="hasRequests && !isLoading">
+          <request-item
+            v-for="request in requests"
+            :key="request.id"
+            :email="request.userEmail"
+            :message="request.userMessage"
+          />
+        </ul>
+        <h3 v-else>You haven't received any requests yet!</h3>
+      </base-card>
+    </section>
+  </div>
 </template>
 
 <script>
