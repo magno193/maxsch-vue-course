@@ -1,3 +1,5 @@
+let timer;
+
 export default {
   login({ dispatch }, payload) {
     return dispatch('auth', {
@@ -11,7 +13,7 @@ export default {
       mode: 'signup',
     });
   },
-  async auth({ commit }, payload) {
+  async auth({ commit, dispatch }, payload) {
     const mode = payload.mode;
     let url = (mode === 'signup')
       ? 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBvo61tjQ1VGYEAubpzmE4YiY0F-rdAZao'
@@ -32,31 +34,55 @@ export default {
       throw error;
     }
 
+    const expiresIn = responseData.expiresIn * 1000; // Para ms
+    const expirationDate = new Date().getTime() + expiresIn;
+
     localStorage.setItem('COACH_token', responseData.idToken);
     localStorage.setItem('COACH_userId', responseData.localId);
+    localStorage.setItem('COACH_tokenExpiration', expirationDate)
+
+    timer = setTimeout(() => {
+      dispatch('autoLogout');
+    }, expiresIn)
 
     commit('setUser', {
       token: responseData.idToken,
       userId: responseData.localId,
-      tokenExpiration: responseData.expiresIn,
     });
   },
-  tryLogin({ commit }) {
+  tryLogin({ commit, dispatch }) {
     const token = localStorage.getItem('COACH_token');
     const userId = localStorage.getItem('COACH_userId');
+    const tokenExpiration = localStorage.getItem('COACH_tokenExpiration');
+
+    const expiresIn = +tokenExpiration - new Date().getTime();
+    if (expiresIn < 0) return;
+
+    timer = setTimeout(() => {
+      dispatch('autoLogout');
+    }, expiresIn)
+
     if (token && userId) {
       commit('setUser', {
         token,
         userId,
-        tokenExpiration: null,
       });
     }
   },
   logout({ commit }) {
+    localStorage.removeItem('COACH_token');
+    localStorage.removeItem('COACH_userId');
+    localStorage.removeItem('COACH_tokenExpiration');
+
+    clearTimeout(timer);
+
     commit('setUser', {
       token: null,
       userId: null,
-      tokenExpiration: null,
     });
   },
+  autoLogout({ dispatch, commit }) {
+    dispatch('logout');
+    commit('setAutoLogout');
+  }
 };
