@@ -1,6 +1,22 @@
 export default {
-  async login({ commit }, payload) {
-    const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBvo61tjQ1VGYEAubpzmE4YiY0F-rdAZao', {
+  login({ dispatch }, payload) {
+    return dispatch('auth', {
+      ...payload,
+      mode: 'login',
+    });
+  },
+  signup({ dispatch }, payload) {
+    return dispatch('auth', {
+      ...payload,
+      mode: 'signup',
+    });
+  },
+  async auth({ commit }, payload) {
+    const mode = payload.mode;
+    let url = (mode === 'signup')
+      ? 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBvo61tjQ1VGYEAubpzmE4YiY0F-rdAZao'
+      : 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBvo61tjQ1VGYEAubpzmE4YiY0F-rdAZao';
+    const response = await fetch(url, {
       method: 'POST',
       body: JSON.stringify({
         email: payload.email,
@@ -12,42 +28,29 @@ export default {
     const responseData = await response.json();
 
     if (!response.ok) {
-      console.warn(responseData);
       const error = new Error(responseData.message || 'Failed to authenticate.');
       throw error;
     }
 
-    console.log(responseData);
+    localStorage.setItem('COACH_token', responseData.idToken);
+    localStorage.setItem('COACH_userId', responseData.localId);
+
     commit('setUser', {
       token: responseData.idToken,
       userId: responseData.localId,
       tokenExpiration: responseData.expiresIn,
     });
   },
-  async signup({ commit }, payload) {
-    const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBvo61tjQ1VGYEAubpzmE4YiY0F-rdAZao', {
-      method: 'POST',
-      body: JSON.stringify({
-        email: payload.email,
-        password: payload.password,
-        returnSecureToken: true
-      }),
-    });
-
-    const responseData = await response.json();
-
-    if (!response.ok) {
-      console.warn(responseData);
-      const error = new Error(responseData.message || 'Failed to authenticate.');
-      throw error;
+  tryLogin({ commit }) {
+    const token = localStorage.getItem('COACH_token');
+    const userId = localStorage.getItem('COACH_userId');
+    if (token && userId) {
+      commit('setUser', {
+        token,
+        userId,
+        tokenExpiration: null,
+      });
     }
-
-    console.log(responseData);
-    commit('setUser', {
-      token: responseData.idToken,
-      userId: responseData.localId,
-      tokenExpiration: responseData.expiresIn,
-    });
   },
   logout({ commit }) {
     commit('setUser', {
