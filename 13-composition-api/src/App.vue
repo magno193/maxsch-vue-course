@@ -1,24 +1,23 @@
 <template>
   <section class="container">
-    <h2>{{ userName }}</h2>
-    <h3>{{ age }}</h3>
-  </section>
-  <section class="container">
-    <h2>Como objeto</h2>
+    <h2>
+      <code>{{ user }}</code>
+    </h2>
     <h3>{{ user.name }}</h3>
     <h3>{{ user.age }}</h3>
+  </section>
+  <section class="container">
+    <h2><code>toRefs</code></h2>
+    <h3>{{ userName }}</h3>
+    <h3>{{ userAge }}</h3>
   </section>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { reactive, toRefs } from 'vue';
 export default {
   setup() {
-    // ref é para um valor reativo
-    const uName = ref('Alexandre');
-    const uAge = ref('Idade');
-
-    const user = ref({
+    const user = reactive({
       name: 'Alexandre',
       age: null,
     });
@@ -31,15 +30,15 @@ export default {
       );
     };
     setTimeout(() => {
-      // .value é onde modificamos o valor reativo
-      uName.value += ' Magno';
-      uAge.value = setAge(1993, 12, 6);
-
-      user.value.name += ' Magno';
-      user.value.age = setAge(1993, 12, 6);
+      // reactive permite acessar o objeto diretamente
+      user.name += ' Magno';
+      user.age = setAge(1993, 12, 6);
     }, 2000);
 
-    return { userName: uName, age: uAge, user };
+    // Propriedades com reatividadee
+    const userRefs = toRefs(user);
+
+    return { user, userName: userRefs.name, userAge: userRefs.age };
   },
 };
 </script>
