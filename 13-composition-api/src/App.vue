@@ -5,8 +5,9 @@
     </h2>
     <h3>{{ user.name }}</h3>
     <h3>{{ user.age }}</h3>
+    <button @click="toggleSection">Toggle section 2 {{ section }}</button>
   </section>
-  <section class="container">
+  <section class="container" v-show="section">
     <h2><code>toRefs</code></h2>
     <h3>{{ userName }}</h3>
     <h3>{{ userAge }}</h3>
@@ -14,7 +15,7 @@
 </template>
 
 <script>
-import { reactive, toRefs } from 'vue';
+import { reactive, ref, toRefs } from 'vue';
 export default {
   setup() {
     const user = reactive({
@@ -29,6 +30,12 @@ export default {
         ).getUTCFullYear() - 1970
       );
     };
+
+    const section = ref(true);
+    const toggleSection = () => {
+      section.value = !section.value;
+    };
+
     setTimeout(() => {
       // reactive permite acessar o objeto diretamente
       user.name += ' Magno';
@@ -38,7 +45,13 @@ export default {
     // Propriedades com reatividadee
     const userRefs = toRefs(user);
 
-    return { user, userName: userRefs.name, userAge: userRefs.age };
+    return {
+      user,
+      userName: userRefs.name,
+      userAge: userRefs.age,
+      section,
+      toggleSection,
+    };
   },
 };
 </script>
