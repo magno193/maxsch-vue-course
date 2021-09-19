@@ -1,5 +1,17 @@
 <template>
   <section class="container">
+    <h2>Inputs</h2>
+    <p>Utilizando <code>computed</code></p>
+    <div>
+      <input type="text" placeholder="First name" v-model="firstName" />
+      <input type="text" placeholder="Last name" v-model="lastName" />
+      <div>{{ fullName }}</div>
+    </div>
+    <button @click="changeAge">Change age</button>
+    <h4>Age: {{ age }}</h4>
+  </section>
+  <hr />
+  <section class="container">
     <h2>
       <code>{{ user }}</code>
     </h2>
@@ -7,6 +19,7 @@
     <h3>{{ user.age }}</h3>
     <button @click="toggleSection">Toggle section 2 {{ section }}</button>
   </section>
+  <hr />
   <section class="container" v-show="section">
     <h2><code>toRefs</code></h2>
     <h3>{{ userName }}</h3>
@@ -15,12 +28,24 @@
 </template>
 
 <script>
-import { reactive, ref, toRefs } from 'vue';
+import { reactive, ref, toRefs, computed, watch } from 'vue';
 export default {
   setup() {
     const user = reactive({
       name: 'Alexandre',
       age: null,
+    });
+    const firstName = ref('');
+    const lastName = ref('');
+    const age = ref(27);
+    const changeAge = () => {
+      age.value = Math.floor(Math.random() * 100);
+    };
+
+    const fullName = computed(() => `${firstName.value} ${lastName.value}`); // readonly
+    watch([firstName, age], (newValues, oldValues) => {
+      console.log(newValues);
+      console.log(oldValues);
     });
 
     const setAge = (year, month, day) => {
@@ -51,6 +76,11 @@ export default {
       userAge: userRefs.age,
       section,
       toggleSection,
+      fullName,
+      firstName,
+      lastName,
+      age,
+      changeAge,
     };
   },
 };
@@ -76,5 +106,8 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   padding: 1rem;
   text-align: center;
+}
+hr {
+  margin: 0.5rem;
 }
 </style>
