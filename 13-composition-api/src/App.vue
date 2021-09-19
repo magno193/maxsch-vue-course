@@ -1,10 +1,6 @@
 <template>
   <section class="container">
-    <user-data
-      :firstName="firstName"
-      :lastName="lastName"
-      :age="userAge"
-    ></user-data>
+    <user-data :firstName="firstName" :lastName="lastName"></user-data>
     <h2>Inputs</h2>
     <p>Utilizando <code>computed</code></p>
     <div>
@@ -34,7 +30,7 @@
 </template>
 
 <script>
-import { reactive, ref, toRefs, computed, watch } from 'vue';
+import { reactive, ref, toRefs, computed, watch, provide } from 'vue';
 import UserData from './components/Userdata.vue';
 export default {
   components: { UserData },
@@ -50,6 +46,7 @@ export default {
       lastName.value = lastNameInput.value.value;
     };
     const age = ref(27);
+    provide('userAge', age);
     const changeAge = () => {
       age.value = Math.floor(Math.random() * 100);
     };
