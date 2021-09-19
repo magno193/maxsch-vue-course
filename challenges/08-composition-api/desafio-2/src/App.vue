@@ -3,8 +3,8 @@
     <h1>Expense Tracker</h1>
   </header>
   <section>
-    <div>Available Funds: {{ availableFunds }}</div>
-    <div>Total Expenses: {{ currentExpenses }}</div>
+    <div>Available Funds: {{ funds.available }}</div>
+    <div>Total Expenses: {{ funds.expenses }}</div>
     <hr />
     <div>Funds left: {{ remainingFunds }}</div>
   </section>
@@ -12,7 +12,7 @@
     <form @submit.prevent="addExpense">
       <div>
         <label for="amount">Amount</label>
-        <input id="amount" type="number" v-model="enteredExpense" />
+        <input id="amount" type="number" v-model="newExpense" />
       </div>
       <button>Add Expense</button>
     </form>
@@ -20,31 +20,48 @@
 </template>
 
 <script>
+import { reactive, computed, ref, watch } from 'vue';
 export default {
-  data() {
-    return {
-      availableFunds: 100,
-      currentExpenses: 0,
-      enteredExpense: 0,
-    };
+  setup() {
+    const funds = reactive({
+      available: 100,
+      expenses: 0,
+    });
+    const newExpense = ref(0);
+    function addExpense() {
+      funds.expenses += newExpense.value;
+      newExpense.value = 0;
+    }
+    const remainingFunds = computed(() => funds.available - funds.expenses);
+    watch(remainingFunds, (val) => {
+      val < 0 ? alert('Você está quebrado!') : '';
+    });
+    return { funds, newExpense, addExpense, remainingFunds };
   },
-  computed: {
-    remainingFunds() {
-      return this.availableFunds - this.currentExpenses;
-    },
-  },
-  methods: {
-    addExpense() {
-      this.currentExpenses += this.enteredExpense;
-    },
-  },
-  watch: {
-    remainingFunds(val) {
-      if (val < 0) {
-        alert('You are broke!');
-      }
-    },
-  },
+  // data() {
+  //   return {
+  //     availableFunds: 100,
+  //     currentExpenses: 0,
+  //     enteredExpense: 0,
+  //   };
+  // },
+  // computed: {
+  //   remainingFunds() {
+  //     return this.availableFunds - this.currentExpenses;
+  //   },
+  // },
+  // methods: {
+  //   addExpense() {
+  //     this.currentExpenses += this.enteredExpense;
+  //   },
+  // },
+  // watch: {
+  //   remainingFunds(val) {
+  //     if (val < 0) {
+  //       alert('You are broke!');
+  //     }
+  //   },
+  // },
 };
 </script>
 
