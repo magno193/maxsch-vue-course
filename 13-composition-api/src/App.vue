@@ -7,6 +7,8 @@
       <input type="text" placeholder="Last name" v-model="lastName" />
       <div>{{ fullName }}</div>
     </div>
+    <button @click="changeAge">Change age</button>
+    <h4>Age: {{ age }}</h4>
   </section>
   <hr />
   <section class="container">
@@ -26,7 +28,7 @@
 </template>
 
 <script>
-import { reactive, ref, toRefs, computed } from 'vue';
+import { reactive, ref, toRefs, computed, watch } from 'vue';
 export default {
   setup() {
     const user = reactive({
@@ -35,8 +37,16 @@ export default {
     });
     const firstName = ref('');
     const lastName = ref('');
+    const age = ref(27);
+    const changeAge = () => {
+      age.value = Math.floor(Math.random() * 100);
+    };
 
     const fullName = computed(() => `${firstName.value} ${lastName.value}`); // readonly
+    watch([firstName, age], (newValues, oldValues) => {
+      console.log(newValues);
+      console.log(oldValues);
+    });
 
     const setAge = (year, month, day) => {
       return (
@@ -69,6 +79,8 @@ export default {
       fullName,
       firstName,
       lastName,
+      age,
+      changeAge,
     };
   },
 };
