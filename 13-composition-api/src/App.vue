@@ -1,10 +1,16 @@
 <template>
   <section class="container">
+    <user-data
+      :firstName="firstName"
+      :lastName="lastName"
+      :age="userAge"
+    ></user-data>
     <h2>Inputs</h2>
     <p>Utilizando <code>computed</code></p>
     <div>
       <input type="text" placeholder="First name" v-model="firstName" />
-      <input type="text" placeholder="Last name" v-model="lastName" />
+      <input type="text" placeholder="Last name" ref="lastNameInput" />
+      <button @click="setLastName">Set Last Name</button>
       <div>{{ fullName }}</div>
     </div>
     <button @click="changeAge">Change age</button>
@@ -29,7 +35,9 @@
 
 <script>
 import { reactive, ref, toRefs, computed, watch } from 'vue';
+import UserData from './components/Userdata.vue';
 export default {
+  components: { UserData },
   setup() {
     const user = reactive({
       name: 'Alexandre',
@@ -37,6 +45,10 @@ export default {
     });
     const firstName = ref('');
     const lastName = ref('');
+    const lastNameInput = ref(null);
+    const setLastName = () => {
+      lastName.value = lastNameInput.value.value;
+    };
     const age = ref(27);
     const changeAge = () => {
       age.value = Math.floor(Math.random() * 100);
@@ -81,6 +93,8 @@ export default {
       lastName,
       age,
       changeAge,
+      lastNameInput,
+      setLastName,
     };
   },
 };
