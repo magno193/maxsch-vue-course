@@ -3,8 +3,8 @@
     <h2>Inputs</h2>
     <p>Utilizando <code>computed</code></p>
     <div>
-      <input type="text" placeholder="First name" @input="setFirstName" />
-      <input type="text" placeholder="Last name" @input="setLastName" />
+      <input type="text" placeholder="First name" v-model="firstName" />
+      <input type="text" placeholder="Last name" v-model="lastName" />
       <div>{{ fullName }}</div>
     </div>
   </section>
@@ -35,12 +35,7 @@ export default {
     });
     const firstName = ref('');
     const lastName = ref('');
-    const setFirstName = (e) => {
-      firstName.value = e.target.value;
-    };
-    const setLastName = (e) => {
-      lastName.value = e.target.value;
-    };
+
     const fullName = computed(() => `${firstName.value} ${lastName.value}`); // readonly
 
     const setAge = (year, month, day) => {
@@ -72,8 +67,8 @@ export default {
       section,
       toggleSection,
       fullName,
-      setFirstName,
-      setLastName,
+      firstName,
+      lastName,
     };
   },
 };
