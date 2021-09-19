@@ -9,10 +9,11 @@
 export default {
   props: ['id', 'userName'],
   emits: ['list-projects'],
-  methods: {
-    viewProjects() {
-      this.$emit('list-projects', this.id);
-    },
+  setup(props, { emit }) {
+    function viewProjects() {
+      emit('list-projects', props.id);
+    }
+    return { viewProjects };
   },
 };
 </script>

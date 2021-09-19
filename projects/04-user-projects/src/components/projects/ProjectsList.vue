@@ -1,9 +1,17 @@
 <template>
   <base-container v-if="user">
     <h2>{{ user.fullName }}: Projects</h2>
-    <base-search v-if="hasProjects" @search="updateSearch" :search-term="enteredSearchTerm"></base-search>
+    <base-search
+      v-if="hasProjects"
+      @search="updateSearch"
+      :search-term="enteredSearchTerm"
+    ></base-search>
     <ul v-if="hasProjects">
-      <project-item v-for="prj in availableProjects" :key="prj.id" :title="prj.title"></project-item>
+      <project-item
+        v-for="prj in availableProjects"
+        :key="prj.id"
+        :title="prj.title"
+      ></project-item>
     </ul>
     <h3 v-else>No projects found.</h3>
   </base-container>
@@ -13,6 +21,7 @@
 </template>
 
 <script>
+import { ref, computed, watch, toRefs } from 'vue';
 import ProjectItem from './ProjectItem.vue';
 
 export default {
@@ -20,41 +29,39 @@ export default {
     ProjectItem,
   },
   props: ['user'],
-  data() {
-    return {
-      enteredSearchTerm: '',
-      activeSearchTerm: '',
-    };
-  },
-  computed: {
-    hasProjects() {
-      return this.user.projects && this.availableProjects.length > 0;
-    },
-    availableProjects() {
-      if (this.activeSearchTerm) {
-        return this.user.projects.filter((prj) =>
-          prj.title.includes(this.activeSearchTerm)
-        );
-      }
-      return this.user.projects;
-    },
-  },
-  methods: {
-    updateSearch(val) {
-      this.enteredSearchTerm = val;
-    },
-  },
-  watch: {
-    enteredSearchTerm(val) {
+  setup(props) {
+    const enteredSearchTerm = ref('');
+    const activeSearchTerm = ref('');
+    function updateSearch(val) {
+      enteredSearchTerm.value = val;
+    }
+
+    watch(enteredSearchTerm, (val) => {
       setTimeout(() => {
-        if (val === this.enteredSearchTerm) {
-          this.activeSearchTerm = val;
+        if (val === enteredSearchTerm.value) {
+          activeSearchTerm.value = val;
         }
       }, 300);
-    },
-    user() {
-      this.enteredSearchTerm = '';
-    },
+    });
+
+    const { user } = toRefs(props);
+    watch(user, () => {
+      enteredSearchTerm.value = '';
+    });
+
+    const availableProjects = computed(() =>
+      activeSearchTerm.value
+        ? props.user.projects.filter((prj) =>
+            prj.title.includes(activeSearchTerm.value)
+          )
+        : props.user.projects
+    );
+
+    const hasProjects = computed(
+      () => props.user.projects && availableProjects.value.length > 0
+    );
+
+    return { updateSearch, hasProjects, availableProjects, enteredSearchTerm };
   },
 };
 </script>
