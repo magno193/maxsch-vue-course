@@ -39,7 +39,7 @@ export default {
     );
 
     watch(user, () => {
-      enteredSearchTerm.value = '';
+      updateSearch('');
     });
 
     const hasProjects = computed(
