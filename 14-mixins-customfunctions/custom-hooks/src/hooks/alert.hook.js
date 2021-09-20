@@ -1,6 +1,6 @@
 import { ref } from 'vue';
-export default function useAlert() {
-  const alertIsVisible = ref(false);
+export default function useAlert(startingVisibily = false) {
+  const alertIsVisible = ref(startingVisibily);
 
   function showAlert() {
     alertIsVisible.value = true;
