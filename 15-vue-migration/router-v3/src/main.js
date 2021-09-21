@@ -1,7 +1,22 @@
 import { createApp } from 'vue';
-
+import { createRouter, createWebHistory } from 'vue-router';
 import App from './App.vue';
+import UsersList from './pages/UsersList';
+import WelcomeScreen from './pages/WelcomeScreen';
 
-// Add router!
 
-createApp(App).mount('#app');
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+    { path: '/', component: WelcomeScreen },
+    { path: '/users', component: UsersList },
+  ],
+});
+
+const app = createApp(App);
+app.use(router);
+
+// Certificar de inicializar router antes the montar #app
+router.isReady().then(() => {
+  app.mount('#app');
+});
