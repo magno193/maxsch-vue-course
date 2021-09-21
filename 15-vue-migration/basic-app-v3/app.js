@@ -1,4 +1,18 @@
-Vue.component('the-button', {
+const app = Vue.createApp(
+  {
+    el: '#app',
+    data: () => ({
+      message: 'This works in Vue 2!',
+    }),
+    methods: {
+      changeMessage() {
+        this.message = 'Will it work in Vue 3?';
+      },
+    },
+  }
+);
+app.component('the-button', {
+  emits: ['update'],
   template: '<button @click="updateMessage">Click me</button>',
   methods: {
     updateMessage() {
@@ -6,15 +20,4 @@ Vue.component('the-button', {
     },
   },
 });
-
-new Vue({
-  el: '#app',
-  data: {
-    message: 'This works in Vue 2!',
-  },
-  methods: {
-    changeMessage() {
-      this.message = 'Will it work in Vue 3?';
-    },
-  },
-});
+app.mount('#app')
